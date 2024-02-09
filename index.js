@@ -1,7 +1,7 @@
 //Aula 1
 const perguntas = [
     {
-        pergunta: "Qual é o símbolo utilizado para realizar uma atribuiç?o em C?",
+        pergunta: "Qual é o símbolo utilizado para realizar uma atribuição em C?",
         respostas: [ //A child de perguntas.
             "=", 
             "==",
@@ -10,7 +10,7 @@ const perguntas = [
         correta: 0
     },
     {
-        pergunta: "Qual é o operador utilizado para indicar a multiplicaç?o em C?",
+        pergunta: "Qual é o operador utilizado para indicar a multiplicação em C?",
         respostas: [
             "*",
             "^",
@@ -19,7 +19,7 @@ const perguntas = [
         correta: 0
     },
     {
-        pergunta: "Qual é a funç?o utilizada para imprimir na tela em C?",
+        pergunta: "Qual é a função utilizada para imprimir na tela em C?",
         respostas: [
             "print()",
             "scan()",
@@ -46,7 +46,7 @@ const perguntas = [
         correta: 1
     },
     {
-        pergunta: "Qual é a funç?o utilizada para ler do teclado em C?",
+        pergunta: "Qual é a função utilizada para ler do teclado em C?",
         respostas: [
             "read()",
             "scanf()",
@@ -55,7 +55,7 @@ const perguntas = [
         correta: 1
     },
     {
-        pergunta: "Como se chama a funç?o principal em um programa em C?",
+        pergunta: "Como se chama a função principal em um programa em C?",
         respostas: [
             "main()",
             "start()",
@@ -82,7 +82,7 @@ const perguntas = [
         correta: 0
     },
     {
-        pergunta: "Qual é a funç?o utilizada para obter o tamanho de uma variável em C?",
+        pergunta: "Qual é a função utilizada para obter o tamanho de uma variável em C?",
         respostas: [
             "length()",
             "size()",
@@ -93,7 +93,6 @@ const perguntas = [
 ];
 
 const quiz = document.querySelector('#quiz')
-//Pegando o template que está em 'html' guardado para usá-lo...
 const template = document.querySelector('template')
 
 const corretas = new Set()
@@ -101,32 +100,33 @@ const totalDePerguntas = perguntas.length
 const mostrarTotal = document.querySelector('#acertos span')
 mostrarTotal.textContent = corretas.size + ' de ' + totalDePerguntas
 
-//Utitlizando o laço de repetição for para colocar os tópicos que eu quero...
-for(const item of perguntas){
-    const quizItem = template.content.cloneNode(true)
-    quizItem.querySelector('h3').textContent = item.pergunta
+// loop ou laço de repetição
+for (const item of perguntas) {
+  const quizItem = template.content.cloneNode(true)
+  quizItem.querySelector('h3').textContent = item.pergunta
 
-//Utilizando o for para colocar tópicos também, porém dentro do primeiro laço...
-    for(let resposta of item.respostas){
-        const dt = quizItem.querySelector('dl dt').cloneNode(true)
-        dt.querySelector('span').textContent = resposta
-        dt.querySelector('input').setAttribute('name', 'pergunta-' + perguntas.indexOf(item))
-        dt.querySelector('input').value = item.respostas.indexOf(resposta)
-        dt.querySelector('input').onchange = (event) => {
-            const estaCorreta = event.target.value == item.correta //true or false...
-            
-            corretas.delete(item)
-            if(estaCorreta){
-                corretas.add(item)
-            }
-            mostrarTotal.textContent = corretas.size + ' de ' + totalDePerguntas
-        }
+  for (let resposta of item.respostas) {
+    const dt = quizItem.querySelector('dl dt').cloneNode(true)
+    dt.querySelector('span').textContent = resposta
+    dt.querySelector('input').setAttribute('name', 'pergunta-' + perguntas.indexOf(item))
+    dt.querySelector('input').value = item.respostas.indexOf(resposta)
+    dt.querySelector('input').onchange = (event) => {
+      const estaCorreta = event.target.value == item.correta
 
-        quizItem.querySelector('dl').appendChild(dt)
+      corretas.delete(item)
+      if (estaCorreta) {
+        corretas.add(item)
+      }
+
+      mostrarTotal.textContent = corretas.size + ' de ' + totalDePerguntas
     }
+    quizItem.querySelector('dl').appendChild(dt)
+  }
 
-    quizItem.querySelector('dl dt').remove()
 
-    //Coloca a pergunta na tela.
-    quiz.appendChild(quizItem)
+  quizItem.querySelector('dl dt').remove()
+
+
+  // coloca a pergunta na tela
+  quiz.appendChild(quizItem)
 }
